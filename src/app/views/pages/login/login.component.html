@@ -5,29 +5,42 @@
         <c-card-group>
           <c-card class="p-4">
             <c-card-body>
-              <form cForm>
+              <form cForm [formGroup]="loginForm" (ngSubmit)="login()">
                 <h1>Login</h1>
                 <p class="text-medium-emphasis">Sign In to your account</p>
                 <c-input-group class="mb-3">
                   <span cInputGroupText>
                     <svg cIcon name="cilUser"></svg>
                   </span>
-                  <input autoComplete="username" cFormControl placeholder="Username" />
+                  <input
+                    autoComplete="identifier"
+                    formControlName="identifier"
+                    cFormControl
+                    placeholder="Username / Email"
+                  />
                 </c-input-group>
+                <small *ngIf="identifier.invalid && (identifier.dirty || identifier.touched)" class="text-danger">
+                  <div *ngIf="identifier.errors?.['required']">Identifier is required</div>
+                </small>
                 <c-input-group class="mb-4">
                   <span cInputGroupText>
                     <svg cIcon name="cilLockLocked"></svg>
                   </span>
                   <input
-                    autoComplete="current-password"
+                    autoComplete="password"
+                    formControlName="password"
                     cFormControl
                     placeholder="Password"
                     type="password"
                   />
                 </c-input-group>
+                <small *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
+                  <div *ngIf="password.errors?.['required']">Password is required</div>
+                  <div *ngIf="password.errors?.['pattern']">Please use minimum 8 characters, at least 1 uppercase, 1 lowercase, 1 number and 1 special character!</div>
+                </small>
                 <c-row>
                   <c-col xs="6">
-                    <button cButton class="px-4" color="primary">
+                    <button cButton class="px-4" color="primary" [disabled]="loginForm.invalid" type="submit">
                       Login
                     </button>
                   </c-col>
@@ -39,14 +52,17 @@
                 </c-row>
               </form>
             </c-card-body>
+            <c-card-footer *ngIf="message">
+              <p *ngIf="valid" class="text-success">{{message}}</p>
+              <p *ngIf="!valid" class="text-danger">{{message}}</p>
+            </c-card-footer>
           </c-card>
           <c-card [ngStyle]="{'width.%': 44}" class="text-white bg-primary py-5">
             <c-card-body class="text-center">
               <div>
                 <h2>Sign up</h2>
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                  tempor incididunt ut labore et dolore magna aliqua.
+                  Not a member?
                 </p>
                 <button [active]="true" cButton class="mt-3" color="primary" routerLink="/register">
                   Register Now!

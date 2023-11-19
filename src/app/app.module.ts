@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
-import { HashLocationStrategy, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { NgScrollbarModule } from 'ngx-scrollbar';
+
 
 // Import routing module
 import { AppRoutingModule } from './app-routing.module';
@@ -37,11 +38,16 @@ import {
 } from '@coreui/angular';
 
 import { IconModule, IconSetService } from '@coreui/icons-angular';
+import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './views/pages/login/login.component';
+import { RegisterComponent } from './views/pages/register/register.component';
 
 const APP_CONTAINERS = [
   DefaultFooterComponent,
   DefaultHeaderComponent,
-  DefaultLayoutComponent
+  DefaultLayoutComponent,
+  LoginComponent,
+  RegisterComponent,
 ];
 
 @NgModule({
@@ -72,7 +78,8 @@ const APP_CONTAINERS = [
     BadgeModule,
     ListGroupModule,
     CardModule,
-    NgScrollbarModule
+    NgScrollbarModule,
+    HttpClientModule
   ],
   providers: [
     {
